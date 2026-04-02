@@ -1,0 +1,441 @@
+---
+title: "Ejercicios Dplyr"
+author: "Mariana Castaño Garcia"
+date: "29 Marzo,2026"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    code-fold: false
+    code-summary: "Ver código"
+    theme: flatly
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  engine: knitr
+---
+
+# Introducción
+
+Este documento contiene 20 ejercicios prácticos utilizando el paquete **dplyr** con el dataset **Gapminder**. Aprenderemos a manipular datos de forma eficiente usando verbos dplyr y el operador pipe %\<%
+
+## Configuración Inicial
+
+Primero, carguemos las librerías necesarias:
+
+```{r}
+library(dplyr) 
+library(gapminder)
+library(knitr)
+```
+
+### EJERCICIOS
+
+#### Ejercicio 1
+
+1\. Select only the columns country, year, and lifeExp.
+
+Seleccionar únicamente las columnas `country`, `year` y `lifeExp` del dataset.
+
+```{r}
+gapminder %>%   select(country, year, lifeExp) %>%   head(10)
+```
+
+**Resultado:**
+
+El código selecciona únicamente las columnas **country**, **year** y **lifeExp** del dataset `gapminder`.\
+Luego se muestran las primeras 10 filas con `head(10)`. El resultado permite observar cómo cambia la esperanza de vida de un país a lo largo de distintos años, utilizando solo las variables necesarias para este análisis.
+
+#### Ejercicio 2
+
+2\. Filter the dataset to show only observations from the year 2007.\
+Filtrar las observaciones correspondientes al año 2007.
+
+```{r}
+gapminder %>%   filter(year == 2007) %>%   head(10)
+```
+
+**Resultado:**
+
+Se filtran los datos para mostrar únicamente las observaciones correspondientes al **año 2007.** El resultado muestra información de todos los países en ese año, incluyendo su continente, población, esperanza de vida y PIB per cápita. Esto permite analizar la situación global más reciente disponible en el dataset.
+
+#### Ejercicio 3
+
+3\. Filter the dataset for countries in Asia.
+
+Filtrar los países que pertenecen al continente Europa.
+
+```{r}
+gapminder %>%   filter(continent == "Asia") %>%   select(country, year, continent, lifeExp) %>%   head(10)
+```
+
+**Resultado:**
+
+El código filtra los datos para quedarse solo con los países del **continente Asia** y selecciona algunas columnas relevantes. El resultado permite observar cómo han cambiado los valores de esperanza de vida en países asiáticos a lo largo de diferentes años.
+
+#### Ejercicio 4
+
+4.  Select rows where life expectancy is greater than 70.
+
+Filtrar los países con una esperanza de vida (`lifeExp`) mayor a 70 años.
+
+```{r}
+gapminder %>%   filter(lifeExp > 70) %>%   select(country, year, lifeExp) %>%   head(10)
+```
+
+**Resultado:**
+
+Se filtran los países cuya **esperanza de vida es mayor a 70 años**.
+
+El resultado muestra aquellos países y años en los que la población ha alcanzado niveles altos de longevidad, lo que suele estar asociado a mejores condiciones de salud, desarrollo económico y calidad de vida.
+
+#### Ejercicio 5
+
+5.  Arrange the dataset by life expectancy in ascending order.
+
+Seleccionar las columnas country, continent y gdpPercap.
+
+```{r}
+gapminder %>%   arrange(lifeExp) %>%   select(country, year, lifeExp) %>%   head(10)
+```
+
+**Resultado:**
+
+Los datos se ordenan según la variable **lifeExp** de forma ascendente.
+
+El resultado muestra primero los países con **menor esperanza de vida registrada en el dataset**, lo que permite identificar los casos más críticos en términos de salud y desarrollo humano.
+
+#### Ejercicio 6
+
+6\. Arrange the dataset by GDP per capita in descending order.
+
+Ordenar los datos de forma ascendente según el PIB per cápita (gdpPercap).
+
+```{r}
+gapminder %>%   arrange(desc(gdpPercap)) %>%   select(country, year, gdpPercap) %>%   head(10)
+```
+
+**Resultado:**
+
+Los datos se ordenan de forma descendente según el **PIB per cápita (`gdpPercap`)**.
+
+El resultado muestra los países con **mayor nivel de riqueza económica por persona**, destacando economías muy desarrolladas en ciertos años.
+
+#### Ejercicio 7
+
+7.  Create a new column gdp_total as gdpPercap \* pop.
+
+Ordenar los datos de forma descendente según la esperanza de vida (lifeExp).
+
+```{r}
+gapminder %>%   mutate(gdp_total = gdpPercap * pop) %>%   select(country, year, gdpPercap, pop, gdp_total) %>%   head(10)
+```
+
+**Resultado:**
+
+Se crea una nueva variable llamada gdp_total, que se calcula multiplicando el PIB per cápita por la población.
+
+Esto permite estimar el PIB total aproximado de cada país en un año determinado, lo cual da una mejor idea del tamaño real de su economía.
+
+#### Ejercicio 8
+
+8\. Filter countries with population greater than 100 million in 2007.
+
+Crear una nueva variable que represente el PIB total (por ejemplo: gdp = gdpPercap \* pop).
+
+```{r}
+gapminder %>%
+  filter(year == 2007, pop > 100000000) %>%
+  select(country, pop) %>%
+  arrange(desc(pop))
+```
+
+**Resultado:**
+
+Se filtran los países con **más de 100 millones de habitantes en 2007** y luego se ordenan según su población.
+
+El resultado muestra las naciones más pobladas del mundo, como China, India y Estados Unidos, permitiendo identificar cuáles tienen mayor peso demográfico global.
+
+#### Ejercicio 9
+
+9\. Select countries from Europe and display only country and gdpPercap.
+
+Filtrar los datos del continente América y seleccionar algunas variables relevantes.
+
+```{r}
+gapminder %>%
+  filter(continent == "Europe") %>%
+  select(country, gdpPercap) %>%
+  arrange(desc(gdpPercap)) %>%
+  head(10)
+```
+
+**Resultado:**
+
+Se filtran los países de **Europa** y se ordenan según su **PIB per cápita** de forma descendente.
+
+El resultado permite identificar los países europeos con mayor nivel de riqueza económica.
+
+#### Ejercicio 10
+
+10\. Compute the average life expectancy for each continent.
+
+Calcular el promedio de la esperanza de vida (lifeExp) para todo el dataset.
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  summarise(  avg_lifeExp = mean(lifeExp), min_lifeExp = min(lifeExp), max_lifeExp = max(lifeExp), .groups = 'drop' ) %>%
+  arrange(desc(avg_lifeExp))
+```
+
+**Resultado:**
+
+Se agrupan los datos por **continente** y se calculan tres medidas de la esperanza de vida:
+
+-    promedio
+
+-    mínimo
+
+-    máximo
+
+El resultado permite comparar el nivel general de salud y longevidad entre los distintos continentes.
+
+#### Ejercicio 11
+
+11\. Compute the average GDP per capita for each continent and year.
+
+Agrupar los datos por continente y calcular el promedio de esperanza de vida.
+
+```{r}
+gapminder %>%
+  group_by(continent, year) %>%
+  summarise(
+    avg_gdpPercap = mean(gdpPercap),
+    .groups = 'drop'
+  ) %>%
+  arrange(year, desc(avg_gdpPercap)) %>%
+  head(15)
+
+```
+
+**Resultado:**
+
+Se agrupan los datos por **continente y año** y se calcula el **PIB per cápita promedio**.
+
+El resultado muestra cómo evoluciona la riqueza promedio de cada continente a lo largo del tiempo.
+
+#### Ejercicio 12
+
+12\. Find the maximum life expectancy for each continent.
+
+Calcula la esperanza de vida máxima para cada continente.
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  slice_max(lifeExp, n = 1) %>%
+  select(continent, country, year, lifeExp) %>%
+  arrange(desc(lifeExp))
+```
+
+**Resultado:**
+
+Se selecciona el país con **mayor esperanza de vida en cada continente**.
+
+Esto permite identificar cuáles países tienen las mejores condiciones de vida dentro de cada región del mundo.
+
+#### Ejercicio 13
+
+13\. Count how many countries are in each continent.
+
+Contar el número de observaciones por continente.
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  summarise(
+    n_countries = n_distinct(country),
+    n_observations = n(),
+    .groups = 'drop'
+  ) %>%
+  arrange(desc(n_countries))
+```
+
+**Resultado:**
+
+Se calcula el número de países distintos y el número total de observaciones por continente.
+
+El resultado permite entender cómo está distribuido el dataset entre las distintas regiones del mundo.
+
+#### Ejercicio 14
+
+14.For each continent, compute the total population.
+
+Calcular la población total (pop) por continente.
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  summarise( total_pop = sum(pop), avg_pop = mean(pop), .groups = 'drop' ) %>%
+  arrange(desc(total_pop)) %>%
+  mutate(total_pop_millions = total_pop / 1000000)
+
+```
+
+**Resultado:**
+
+Se calcula la población total y el promedio de población por continente. Además, se convierte la población total a millones de habitantes, lo que facilita la interpretación de los datos.
+
+El resultado muestra qué continentes concentran la mayor cantidad de población mundial.
+
+#### Ejercicio 15
+
+15. Filter the dataset for the Americas and compute the average life expectancy by year.
+
+Filtra el conjunto de datos para América y calcula la esperanza de vida promedio por año.
+
+```{r}
+gapminder %>%
+  filter(continent == "Americas") %>% group_by(year) %>%
+  summarise( avg_lifeExp = mean(lifeExp), n_countries = n_distinct(country),.groups = 'drop') %>%
+  arrange(year)
+```
+
+**Resultado:**
+
+Se analizan los países del continente América y se calcula la esperanza de vida promedio por año.
+
+El resultado permite observar cómo ha mejorado progresivamente la esperanza de vida en América desde 1952 hasta 2007.
+
+#### Ejercicio 16
+
+16.Create a dataset with the top 10 countries with highest GDP per capita in 2007.
+
+Seleccionar los países con mayor población en un año específico.
+
+```{r}
+top_10_gdp <- gapminder %>%
+  filter(year == 2007) %>%
+  arrange(desc(gdpPercap)) %>%
+  head(10) %>% select(country, continent, gdpPercap, lifeExp, pop)
+kable(top_10_gdp, caption = "Top 10 países por PIB per cápita en 2007")
+```
+
+**Resultado:**
+
+Se identifican los 10 países con mayor PIB per cápita en 2007.
+
+El resultado permite ver qué economías tenían el mayor nivel de riqueza individual en ese año.
+
+#### Ejercicio 17
+
+17.Find the country with the highest life expectancy in each year.
+
+Crear una nueva variable categórica basada en la esperanza de vida (por ejemplo: alta o baja).
+
+```{r}
+gapminder %>%
+  group_by(year) %>%
+  slice_max(lifeExp, n = 1) %>%
+  select(year, country, continent, lifeExp) %>%
+  arrange(desc(year))
+```
+
+**Resultado:**
+
+Se identifica el país con **mayor esperanza de vida en cada año**.
+
+El resultado muestra que algunos países, especialmente **Japón y países europeos**, aparecen frecuentemente con los valores más altos.
+
+#### Ejercicio 18
+
+18.Compute the median GDP per capita for each continent.
+
+Filtrar los países con PIB per cápita superior al promedio.
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  summarise( median_gdpPercap = median(gdpPercap),mean_gdpPercap = mean(gdpPercap),sd_gdpPercap = sd(gdpPercap),.groups = 'drop' ) %>%
+  arrange(desc(median_gdpPercap))
+```
+
+Resultado:
+
+Se calculan estadísticas del **PIB per cápita por continente**:
+
+-    mediana
+
+-    promedio
+
+-    desviación estándar
+
+El resultado permite comparar la distribución del ingreso entre continentes.
+
+#### Ejercicio 19
+
+19.For each country, calculate the change in life expectancy between 1952 and 2007.
+
+Para cada país, calcule el cambio en la esperanza de vida entre 1952 y 2007.
+
+```{r}
+cambio_lifeExp <- gapminder %>%
+  filter(year %in% c(1952, 2007)) %>%
+  arrange(country, year) %>%
+  group_by(country) %>%
+  summarise(
+    lifeExp_1952 = first(lifeExp),
+    lifeExp_2007 = last(lifeExp),
+    change_lifeExp = last(lifeExp) - first(lifeExp),
+    .groups = 'drop' ) %>%
+  arrange(desc(change_lifeExp))
+head(cambio_lifeExp, 10)
+```
+
+**Resultado:**
+
+Se calcula el cambio en la esperanza de vida entre 1952 y 2007 para cada país.
+
+El resultado muestra qué países han experimentado las mayores mejoras en longevidad, reflejando avances en medicina, nutrición y desarrollo.
+
+#### Ejercicio 20
+
+20.Identify the 5 countries with the largest increase in GDP per capita over time.
+
+Identifica los 5 países con el mayor aumento del PIB per cápita a lo largo del tiempo.
+
+```{r}
+top_5_gdp_increase <- gapminder %>%
+  arrange(country, year) %>%
+  group_by(country) %>%
+  summarise(
+    gdpPercap_1952 = first(gdpPercap),
+    gdpPercap_2007 = last(gdpPercap),
+    gdpPercap_change = last(gdpPercap) - first(gdpPercap),
+    percent_increase = ((last(gdpPercap) - first(gdpPercap)) / first(gdpPercap)) * 100,
+    continent = first(continent),
+    .groups = 'drop' ) %>%
+  arrange(desc(gdpPercap_change)) %>%
+  head(5)
+kable(top_5_gdp_increase, 
+      caption = "Top 5 países con mayor aumento en PIB per cápita (1952-2007)",
+      digits = 2)
+```
+
+**Resultado:**
+
+Se calcula el aumento del PIB per cápita entre 1952 y 2007 para cada país.
+
+El resultado identifica los países que han tenido el mayor crecimiento económico en el largo plazo, lo que refleja procesos de desarrollo y expansión económica.
+
+# Conclusión
+
+En este laboratorio se trabajó con el dataset *gapminder* utilizando funciones del paquete **dplyr** para organizar, filtrar y analizar los datos. A través de estos ejercicios, se pudo entender mejor cómo transformar la información y obtener resultados más claros.
+
+Se observaron diferencias importantes entre países y continentes, especialmente en variables como la esperanza de vida, el PIB per cápita y la población. También se evidenció que, en general, muchos países han mejorado sus condiciones a lo largo del tiempo, aunque no todos al mismo ritmo.
+
+En conclusión, este trabajo permitió aprender herramientas básicas para el análisis de datos y mostró cómo estos análisis ayudan a entender mejor la realidad y tomar decisiones basadas en información.
