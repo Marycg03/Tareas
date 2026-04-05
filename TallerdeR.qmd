@@ -1,0 +1,2151 @@
+---
+title: "Ejercicios Fundamentales de R"
+author: "Mariana Castaño Garcia"
+date: "2026-04-04"
+lang: es
+format: 
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    code-fold: false
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+# Configurar CRAN mirror
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+```
+
+## Introducción
+
+Antes de sumergirnos en los cálculos matemáticos, es fundamental entender el entorno en el que trabajamos. R nos proporciona información valiosa sobre la versión, la configuración del sistema y la localización de archivos.
+
+## Comandos de Información del Sistema
+
+```{r}
+license() 
+# Contribuyentes principales deR 
+contributors()
+# Cómo citar R en publicaciones 
+citation() 
+# Versión de R (formato tradicional)
+R.version 
+# Versión de R (como lista) 
+R.Version()
+# String de versión (más legible) 
+R.version.string 
+# Información de la plataforma 
+.Platform 
+# Información de la máquina (límites numéricos, etc.) 
+.Machine
+# Ubicación del paquete base 
+system.file(package="base") 
+# Ubicación de la instalación de R 
+R.home()
+```
+
+## 2. Calcule usando R
+
+1\$ \frac{1 + \sqrt{5}}{2} \$\$
+
+```{r}
+1 + sqrt(5)/2
+```
+
+2$$
+1 + 3.3 \log(50)
+$$
+
+```{r}
+1 + 3.3 * log(50)
+```
+
+3.  $$
+    1 - e^{-1}
+    $$
+
+```{r}
+1 - exp(-1)
+```
+
+4\.
+
+$$
+2 + \sqrt[5]{3}
+$$
+
+```{r}
+2 + 3^(1/5)
+```
+
+5\.
+
+$$
+\binom{5}{2}
+$$
+
+```{r}
+5/2
+```
+
+6\.
+
+$$
+\frac{1}{1 + \frac{1}{1 + \frac{1}{2}}}
+$$
+
+```{r}
+1 / (1 + 1/(1 + 1/2))
+```
+
+7\.
+
+$$
+\sqrt[3]{1 + \sqrt{1 + 2}}
+$$
+
+```{r}
+(1 + sqrt(1 + 2))^(1/3)
+```
+
+8\.
+
+$$
+1 + \ln\left(\frac{1}{2}\right)
+$$
+
+```{r}
+1 + log(1/2)
+```
+
+9\.
+
+$$
+\log_{2}(8)
+$$
+
+```{r}
+log(8, base=2)
+```
+
+10\.
+
+$$
+\sin(\pi)
+$$
+
+```{r}
+sin(pi)
+```
+
+11
+
+$$
+10!
+$$
+
+```{r}
+factorial(10)
+```
+
+12
+
+$$
+\left(\frac{1 + \sqrt{5}}{2}\right)^{-1}
+$$
+
+```{r}
+((1 + sqrt(5))/2)^(-1)
+```
+
+13\.
+
+$$
+2^{3^4}
+$$
+
+```{r}
+(2^3^4)
+```
+
+14
+
+$$
+(2^3)^4
+$$
+
+```{r}
+(2^3)^4
+```
+
+15. $$
+    \frac{\frac{2}{3}}{4}
+    $$
+
+```{r}
+(2/3)/4
+```
+
+16\.
+
+$$
+\frac{2}{\frac{3}{4}}
+$$
+
+```{r}
+2/(3/4)
+```
+
+17.Residuo
+
+$$
+\frac{7}{2}
+$$
+
+```{r}
+7%%2
+```
+
+18. Cociente
+
+$$
+\frac{7}{2}
+$$
+
+```{r}
+7%/%2
+```
+
+## 3. Dado el código
+
+```{r}
+a <- 1
+b <- 2
+3 -> d
+f <<- 1L
+```
+
+Que hace?
+
+Solo muestra el valor de a
+
+```{r}
+a
+```
+
+ `print()` es una función que imprime el valor. El resultado es igual a solo escribir a
+
+```{r}
+print(a)
+```
+
+ Los paréntesis no cambian nada, solo agrupan. Muestra el mismo valor de `a`
+
+```{r}
+(a)
+```
+
+Suma a (1) + b (2) y guarda el resultado en e (que es 3), pero no lo muestra
+
+```{r}
+e <- a+b
+```
+
+Los paréntesis alrededor de la asignación hacen que se muestre el resultado. Guarda 3 en e y lo imprime
+
+```{r}
+(e <- a+b)
+
+```
+
+Muestra el valor de d que es 3 (fue asignado con `3 -> d`)
+
+```{r}
+d
+```
+
+Muestra el valor de f que es 1 (fue asignado con `f <<- 1L`). El `<<-` es asignación global
+
+```{r}
+f
+```
+
+Devuelve TRUE porque d existe en el ambiente
+
+```{r}
+exists("d")
+```
+
+ Devuelve FALSE porque `zz` no ha sido creada
+
+```{r}
+exists("zz")
+
+```
+
+## 4. Dado un vector numérico 𝑥 explique que hace cada una de las siguientes
+
+funciones de R, ilustre con e
+
+Se crea el vector numérico
+
+```{r}
+x <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3)
+x
+```
+
+##### sort (x)
+
+Ordena el vector de menor a mayor
+
+```{r}
+sort(x)
+```
+
+##### rev(x)
+
+Invierte el orden de los elementos del vector
+
+```{r}
+rev(x)
+```
+
+##### sum(x)
+
+Suma todos los elementos del vector
+
+```{r}
+sum(x)
+```
+
+##### prod(x)
+
+Multiplica todos los elementos del vector
+
+```{r}
+prod(x)
+```
+
+##### length(x)
+
+Devuelve la cantidad de elementos en el vector
+
+```{r}
+length(x)
+```
+
+##### min(x)
+
+Encuentra el valor mínimo del vector
+
+```{r}
+min(x)
+```
+
+##### max(x)
+
+Encuentra el valor máximo del vector
+
+```{r}
+max(x)
+```
+
+##### unique(x)
+
+Devuelve solo los valores únicos (sin repeticiones)
+
+```{r}
+unique(x)
+```
+
+##### duplicated(x)
+
+Muestra TRUE en las posiciones donde hay valores duplicados
+
+```{r}
+duplicated(x)
+```
+
+##### rank(x)
+
+Devuelve el rango (posición ordenada) de cada elemento
+
+```{r}
+rank(x)
+```
+
+##### cumsum(x)
+
+Suma acumulada: cada posición contiene la suma hasta ese punto
+
+```{r}
+cumsum(x)
+```
+
+##### mean(x)
+
+Calcula el promedio (media) de los valores
+
+```{r}
+mean(x)
+```
+
+##### sd(x)
+
+Calcula la desviación estándar (variabilidad de los datos)
+
+```{r}
+sd(x)
+```
+
+##### var(x)
+
+Calcula la varianza (cuadrado de la desviación estándar)
+
+```{r}
+var(x)
+```
+
+##### summary(x)
+
+Devuelve un resumen con estadísticas: mín, Q1, mediana, media, Q3, máx
+
+```{r}
+summary(x)
+```
+
+##### any(x\<0)
+
+Devuelve TRUE si algún elemento es menor a 0, FALSE si ninguno lo es
+
+```{r}
+any(x<0)
+```
+
+##### table(x)
+
+Cuenta cuántas veces aparece cada valor en el vector
+
+```{r}
+table(x)
+```
+
+##### sample(x,2,replace=TRUE)
+
+Extrae 2 elementos al azar del vector. `replace=TRUE` permite repetir elementos
+
+```{r}
+sample(x, 2, replace=TRUE)
+```
+
+## 5. Usando las funciones :, rep() y seq() cree las siguientes sucesiones. Haga
+
+help(":"), help(rep) y/o help(seq) para solicitar ayuda.
+
+Primero las ayudas de estas funciones
+
+```{r}
+help(":")
+help(seq)
+help(rep)
+```
+
+1\. 1, 2, 3, 4, 5, 6, 7
+
+El operador `:` crea una secuencia de 1 a 7 aumentando de 1 en 1
+
+```{r}
+1:7
+```
+
+2\. d, d, d, d, d, d
+
+`rep()` repite el valor "d" 6 veces
+
+```{r}
+rep("d", 6)
+```
+
+3\. 1, 2, 3, 4, 5, 1, 2, 3, 4, 5
+
+`rep()` repite el vector 1:5 dos veces
+
+```{r}
+rep(1:5, 2)
+```
+
+4\. 1, 1, 2, 2, 3, 3, 4, 4, 5, 5
+
+`rep()` con `each=2` repite cada elemento 2 veces
+
+```{r}
+rep(1:5, each=2)
+```
+
+5\. 1, 1, 1, 2, 2, 2, 3, 3, 3
+
+`rep()` con `each=3` repite cada elemento 3 veces
+
+```{r}
+rep(1:3, each=3)
+```
+
+6\. 1, 1, 2, 3, 3, 4, 5, 5
+
+`rep()` con un vector de frecuencias: 1 se repite 2 veces, 2 una vez, 3 dos veces, etc.
+
+```{r}
+rep(c(1, 2, 3, 4, 5), c(2, 1, 2, 1, 2))
+```
+
+7\. 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 1, 1
+
+Primero creamos 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 y luego lo repetimos 2 veces
+
+```{r}
+rep(rep(1:5, each=2), 2)
+```
+
+8\. 1, 1, 2, 2, 3, 3, 1, 1, 2, 2, 3, 3
+
+Repetimos cada elemento de 1:3 dos veces, y luego el patrón completo 2 veces
+
+```{r}
+rep(rep(1:3, each=2), 2)
+```
+
+9\. 2, 6, 10, 14, 18, 22
+
+`seq()` crea una secuencia desde 2 hasta 22 aumentando de 4 en 4
+
+```{r}
+seq(2, 22, by=4)
+```
+
+10\. 2.1, 3.1, 4.1, 5.1
+
+`seq()` crea una secuencia desde 2.1 hasta 5.1 aumentando de 1 en 1
+
+```{r}
+seq(2.1, 5.1, by=1)
+```
+
+## 6. El vector cola representa la cola en una taquilla:
+
+cola \<- c("Carlos", "Paola", "Pedro", "Valeria")
+
+```{r}
+cola <- c("Carlos", "Paola", "Pedro", "Valeria")
+```
+
+1\. Llega Maria
+
+Agregamos "Maria" al final del vector con `c()`
+
+```{r}
+cola <- c(cola, "Maria")
+cola
+```
+
+2.Se va Carlos
+
+`cola[-1]` elimina el primer elemento (Carlos) del vector
+
+```{r}
+cola <- cola[-1]
+cola
+```
+
+3.Pedro se aburre y se va
+
+Usamos `!=` para mantener solo los elementos que NO son "Pedro"
+
+```{r}
+cola <- cola[cola != "Pedro"]
+cola
+```
+
+## 7. ¿Qué hacen los siguientes comandos en R?
+
+ls()
+
+Muestra todas las variables que existen en el ambiente actual
+
+```{r}
+ls()
+```
+
+rm()
+
+`rm()` elimina variables. Aquí eliminamos "cola" y luego `ls()` muestra que ya no existe
+
+```{r}
+rm()
+```
+
+Sys.Date()
+
+Devuelve la fecha actual del sistema
+
+```{r}
+Sys.Date()
+```
+
+Sys.time()
+
+Devuelve la fecha y hora actual del sistema
+
+```{r}
+Sys.time()
+```
+
+sessionInfo()
+
+Muestra información sobre la sesión actual de R: versión, paquetes cargados, sistema operativo, etc.
+
+```{r}
+sessionInfo()
+```
+
+## 8. Dado el vector x \<- c(1,1,1,2,2,2,2,3,3), explique que hacen las
+
+funciones rle(x), NROW() y NCOL()
+
+```{r}
+x <- c(1,1,1,2,2,2,2,3,3)
+x
+```
+
+rle(x)
+
+`rle()` (run length encoding) muestra cuántas veces se repite cada valor consecutivo.
+
+```{r}
+rle(x)
+```
+
+NROW(x)
+
+Devuelve el número de filas. Para un vector, es la cantidad de elementos (9)
+
+```{r}
+NROW(x)
+```
+
+NCOL(x)
+
+Devuelve el número de columnas. Para un vector, es NULL o 1 porque es unidimensional
+
+```{r}
+NCOL(x)
+```
+
+## 9. Dados los vectores x1 y x2 explique como R obtiene x1 + x2
+
+```{r}
+x1 <- c(1,2,3,4,5)
+x2 <- c(6,7,8)
+x1
+x2
+```
+
+x1 + x2
+
+R suma elemento por elemento. Como x2 es más corto, R "recicla" sus elementos:
+
+-   1+6=7, 2+7=9, 3+8=11, 4+6=10, 5+7=12
+
+-   R repite x2 para que tenga la misma longitud que x1 (pero muestra una advertencia)
+
+```{r}
+x1 + x2
+```
+
+suppressWarnings(x1 + x2)
+
+Hace lo mismo que antes, pero oculta el mensaje de advertencia
+
+```{r}
+suppressWarnings(x1 + x2)
+```
+
+## 10. Para el vector c(3:8,1:6,7) explique que hacen las funciones which.min y
+
+which.max
+
+Creamos el vector
+
+```{r}
+vec <- c(3:8, 1:6, 7)
+vec
+```
+
+which.min(vec)
+
+Devuelve la posición (índice) del valor mínimo. El valor 1 está en la posición 9
+
+```{r}
+which.min(vec)
+```
+
+which.max(vec)
+
+Devuelve la posición (índice) del valor máximo. El valor 8 está en la posición 6
+
+```{r}
+which.max(vec)
+```
+
+## 11. La función outer(x,y,FUN) opera la función FUN a cada par de elementos
+
+de los vectores x y y. Por ejemplo para generar una tabla de multiplicación:
+
+Se crea el Vector
+
+```{r}
+a <- 1:9
+names(a) <- a
+a
+```
+
+**Tabla de multiplicación con outer()**
+
+`outer()` aplica la función `*` a cada par de elementos. Crea una matriz donde:
+
+-   Las filas son los elementos de `a`
+
+-   Las columnas son los elementos de `a`
+
+-   Cada celda contiene el producto de fila × columna
+
+```{r}
+outer(a, a, "*")
+```
+
+**Otro ejemplo: Tabla de suma**
+
+Aquí aplicamos `+` en lugar de `*`, creando una tabla de sumas
+
+```{r}
+outer(a, a, "+")
+```
+
+Creamos el vector con valores lógicos:
+
+```{r}
+x = c(TRUE,FALSE)
+x
+```
+
+names(x) = x
+
+```{r}
+names(x) = x
+
+```
+
+outer(x,x,"&")
+
+Crea una tabla (matriz) aplicando el operador AND (`&`) a cada par de elementos:
+
+-   Filas: elementos de x (TRUE, FALSE)
+
+-   Columnas: elementos de x (TRUE, FALSE)
+
+-   Cada celda: resultado de fila & columna
+
+```{r}
+outer(x, x, "&")
+```
+
+outer(x,x,"\|")
+
+Crea una tabla (matriz) aplicando el operador OR (`|`) a cada par de elementos:
+
+-   Filas: elementos de x (TRUE, FALSE)
+
+-   Columnas: elementos de x (TRUE, FALSE)
+
+-   Cada celda: resultado de fila \| columna
+
+```{r}
+outer(x, x, "|")
+```
+
+## 12. ¿Cómo calcula R?
+
+2/3/4
+
+-   R evalúa de **izquierda a derecha** (asociatividad izquierda)
+
+-   Primero: `2/3 = 0.6667`
+
+-   Luego: `0.6667/4 = 0.1667`
+
+-   Es equivalente a: `(2/3)/4`
+
+```{r}
+2/3/4
+
+```
+
+4\^3\^2
+
+La potencia (\^) se evalúa de derecha a izquierda (asociatividad derecha)
+
+```{r}
+4^3^2
+
+```
+
+2+3\*5
+
+R respeta el orden de operaciones (PEMDAS/BODMAS)
+
+Primero: 3\*5 = 15 (multiplicación antes que suma)
+
+Luego: 2+15 = 17
+
+No es: (2+3)\*5 = 25
+
+```{r}
+2+3*5
+
+```
+
+## 13. Explique los siguientes resultados:
+
+1:10-1
+
+-   El operador : (secuencia) tiene mayor precedencia que la resta, Primero: 1:10 crea el vector c(1, 2, 3, ..., 10), Luego: se resta 1 a cada elemento → c(0, 1, 2, ..., 9)
+
+```{r}
+1:10-1
+
+```
+
+1:(10-1)
+
+-   Los paréntesis tienen máxima precedencia, Primero: 10-1 = 9,Luego: 1:9 crea la secuencia c(1, 2, 3, ..., 9),Resultado diferente al anterior porque la operación se hace antes
+
+```{r}
+1:(10-1)
+```
+
+## 14. Prediga el resultado del siguiente código antes de correrlo en R. Explique el
+
+resultado.
+
+a = 1; b = 5; c=6
+
+a + b \* (1:c)
+
+```{r}
+a = 1; b = 5; c = 6
+a + b * (1:c)
+```
+
+1.  1:c genera la secuencia: 1:6 = c(1, 2, 3, 4, 5, 6)
+
+2.b \* (1:c) multiplica cada elemento por 5: c(5, 10, 15, 20, 25, 30)
+
+3.a + ... suma 1 a cada elemento: c(6, 11, 16, 21, 26, 31)
+
+## 15. Con el vector letters extraiga:
+
+Primero se mira que es letters
+
+```{r}
+letters
+```
+
+1\. Los primeros cinco elementos.
+
+```{r}
+head(letters, 5)
+```
+
+2\. Los cuatro últimos elementos.
+
+```{r}
+letters[(length(letters)-3):length(letters)]
+```
+
+3\. El segundo, el octavo y el último.
+
+```{r}
+letters[c(2, 8, 26)]
+```
+
+## 16. Para el comando colors()
+
+1\. ¿Es un vector?
+
+**Sí, es un vector** (específicamente, un vector de caracteres/strings)
+
+```{r}
+is.vector(colors())
+```
+
+2\. ¿Qué estructura tiene?
+
+Vector de caracteres (`chr`) con 657 elementos
+
+```{r}
+str(colors())
+```
+
+3\. ¿Cuál es su longitud?
+
+**657 colores disponibles** en R
+
+```{r}
+length(colors())
+```
+
+4\. ¿Qué hace el comando head(colours(),10) ?
+
+**`head()`** muestra los **primeros 10 elementos** del vector de colores.
+
+```{r}
+head(colors(), 10)
+```
+
+5\. ¿Qué hace el comando tail(colors(),5)?
+
+tail() muestra los últimos 5 elementos del vector de colores.
+
+```{r}
+tail(colors(), 5)
+```
+
+6\. ¿En qué posición está el color "purple"?
+
+```{r}
+which(colors() == "purple")
+```
+
+El color "purple" está en la posición 547 del vector colors().
+
+Para verificar:
+
+```{r}
+colors()[547]
+```
+
+## 17. Para el comando data():
+
+1\. ¿Es una lista?
+
+**Si, si es una lista.**
+
+```{r}
+is.list(data())
+```
+
+2\. ¿Qué estructura tiene?
+
+Es una lista con 4 elementos:
+
+title: "Data sets"
+
+header:tiene un valor nulo
+
+results: Una matriz de caracteres 108 filas x 4 columnas
+
+footer: Cadena de texto con instrucciones de uso
+
+```{r}
+str(data())
+```
+
+3\. ¿Cuál es su longitud?
+
+Su longitud es de 4
+
+```{r}
+length(data())
+```
+
+## 18. Para el vector v2 = c(1,2,NA,3,5,10,NA) que contiene valores pérdidos,
+
+```{r}
+v2 <- c(1, 2, NA, 3, 5, 10, NA)
+v2
+```
+
+**¿Qué hacen estas funciones?**
+
+is.na(v2)
+
+-   Devuelve un vector lógico (TRUE/FALSE),`TRUE` en posiciones donde hay `NA, FALSE` donde hay valores válidos
+
+```{r}
+is.na(v2)
+```
+
+complete.cases(v2)
+
+-   También devuelve un **vector lógico,** `TRUE` donde el caso es "completo" (sin NA), `FALSE` donde hay al menos un NA
+
+```{r}
+complete.cases(v2)
+```
+
+## 19. Explique que hace el siguiente código.
+
+v3 \<- c(2,3,NA,4,5,100,NA,7) v3 \<- v3\[!is.na(v3)\] v3
+
+```{r}
+v3 <- c(2, 3, NA, 4, 5, 100, NA, 7)
+v3 <- v3[!is.na(v3)]
+v3
+```
+
+**Línea 1:** Crea vector `v3` con algunos valores NA
+
+**Línea 2:** Elimina los valores NA
+
+Resultado final:
+
+El código **elimina todos los valores NA** del vector, quedando solo los valores válidos.
+
+```{r}
+v3
+```
+
+## 20. Sea el vector v4 \<- 4:11. Explique el siguiente código línea por línea.
+
+v4 \<- 4:11
+
+```{r}
+v4 <- 4:11
+v4
+```
+
+v4 \> 5
+
+Compara cada elemento con 5, devuelve vector lógico (mayores a 5 son TRUE)
+
+```{r}
+v4 > 5
+```
+
+v4\[v4\>5\]
+
+valores estrictamente mayores a 5
+
+```{r}
+v4[v4 > 5]
+```
+
+v4\[c(rep(TRUE,3),rep(FALSE,4),TRUE)\]
+
+elementos en posiciones 1, 2, 3 y 8
+
+```{r}
+v4[c(rep(TRUE,3), rep(FALSE,4), TRUE)]
+```
+
+## 21. Explique el código siguiente:
+
+v5 \<- numeric(0) length(v5)
+
+**`v5`:** Vector numérico vacío (longitud 0)
+
+```{r}
+v5 <- numeric(0)
+length(v5)
+```
+
+v6 \<- vector("integer",7) v6
+
+**`v6`:** Vector de enteros de longitud 7, inicializado con ceros
+
+```{r}
+v6 <- vector("integer", 7)
+v6
+```
+
+v7 \<- vector("numeric",10) v7
+
+**`v7`:** Vector numérico de longitud 10, inicializado con ceros
+
+```{r}
+v7 <- vector("numeric", 10)
+v7
+```
+
+v8 \<- vector("logical",5) v8
+
+**`v8`:** Vector lógico de longitud 5, inicializado con FALSE
+
+```{r}
+v8 <- vector("logical", 5)
+v8
+```
+
+## 22. Explique el siguiente código:
+
+options(digits=10)
+
+pi\*exp(1)
+
+Establece la **precisión de salida a 10 dígitos significativos**
+
+```{r}
+options(digits=10)
+pi * exp(1)
+```
+
+pi
+
+Constante matemática π, mostrada con 10 dígitos
+
+```{r}
+pi
+```
+
+round(pi,5)
+
+Redondea π a **5 decimales** → 3.14159
+
+```{r}
+round(pi, 5)
+```
+
+ceiling(pi)
+
+Redondea hacia arriba al entero más cercano → 4
+
+```{r}
+ceiling(pi)
+```
+
+floor(pi)
+
+Redondea hacia abajo al entero más cercano → 3
+
+```{r}
+floor(pi)
+```
+
+round(seq(1,2,0.1))
+
+-   seq(1, 2, 0.1) crea: 1.0, 1.1, 1.2, ..., 1.9, 2.0
+
+-   round() redondea cada elemento
+
+```{r}
+round(seq(1, 2, 0.1))
+```
+
+## 23. Dado el vector vect
+
+vect \<- 1:150
+
+```{r}
+vect <- 1:150
+vect
+```
+
+Extraiga los: 1. los pares
+
+```{r}
+vect[vect %% 2 == 0]
+```
+
+2\. los divisibles por 17
+
+```{r}
+vect[vect %% 17 == 0]
+```
+
+3\. los no divisibles por 5
+
+```{r}
+vect[vect %% 5 != 0]
+```
+
+4\. los que tienen residuo 3 bajo división por 7
+
+```{r}
+vect[vect %% 7 == 3]
+```
+
+## 24. En el vector LETTERS, ¿Qué posición ocupa la letra V ?
+
+```{r}
+LETTERS
+which(LETTERS == "V")
+```
+
+La letra "V" ocupa la posición 22 en el vector LETTERS.
+
+25. Cuando se trabaja en la consola, ¿Qué hacen las flechas ↑, ↓, → y ← ?
+
+| **Flecha** | **Función** |
+|------------------------------------|------------------------------------|
+| **↑** (Arriba) | Navega a **comandos anteriores** (historial hacia arriba) |
+| **↓** (Abajo) | Navega a **comandos posteriores** (historial hacia abajo) |
+| **→** (Derecha) | Mueve el cursor **hacia la derecha** en la línea actual |
+| **←** (Izquierda) | Mueve el cursor **hacia la izquierda** en la línea actual |
+
+26\. ¿Qué clase class tienen:
+
+1\. NA
+
+```{r}
+class(NA)
+```
+
+Clase: logical\
+Explicación: NA por defecto es de clase lógica, pero cambia según contexto:
+
+```{r}
+class(as.numeric(NA)) 
+class(as.character(NA)) 
+```
+
+2\. Inf
+
+Clase: `numeric`\
+Explicación: Infinito es un valor numérico
+
+```{r}
+class(Inf)
+```
+
+3\. NaN
+
+Clase: `numeric`\
+Explicación: "Not a Number" es un valor numérico que representa indefinición
+
+```{r}
+class(NaN)
+```
+
+4\. NULL
+
+Clase: `NULL`\
+Explicación: Ausencia total de objeto. No confundir con NA o NaN
+
+```{r}
+class(NULL)
+```
+
+```{r}
+length(NULL)   
+is.null(NULL) 
+```
+
+5\. TRUE
+
+```{r}
+class(TRUE)
+```
+
+Clase: `logical`\
+Explicación: Valor booleano/lógico
+
+```{r}
+class(FALSE)
+is.logical(TRUE)
+```
+
+## 27. ¿Qué tipo typeof tienen:
+
+**1. NA**
+
+```{r}
+typeof(NA)
+```
+
+Tipo: `logical`\
+Explicación: NA sin especificar es de tipo lógico por defecto.
+
+**2. Inf**
+
+```{r}
+typeof(Inf)
+```
+
+Tipo: `double`\
+Explicación: Infinito es un número de punto flotante de doble precisión.
+
+**3. NaN**
+
+```{r}
+typeof(NaN)
+```
+
+Tipo: `double`\
+Explicación: "Not a Number" también es un double (valor especial en punto flotante).
+
+**4. NULL**
+
+```{r}
+typeof(NULL)
+```
+
+Tipo: `NULL`\
+Explicación: NULL es un tipo especial que representa la ausencia de objeto.
+
+**5. TRUE**
+
+```{r}
+typeof(TRUE)
+```
+
+Tipo: `logical`\
+Explicación: Los valores booleanos son de tipo lógico.
+
+## 28. ¿Qué modo mode tienen:
+
+1\. NA
+
+```{r}
+mode(NA)
+```
+
+**Modo:** `logical`
+
+2\. Inf
+
+```{r}
+mode(Inf)
+```
+
+**Modo:** `numeric`
+
+3\. NaN
+
+```{r}
+mode(NaN)
+```
+
+**Modo:** `numeric`
+
+4\. NULL
+
+```{r}
+mode(NULL)
+```
+
+**Modo:** `NULL`
+
+5\. TRUE
+
+```{r}
+mode(TRUE)
+```
+
+**Modo:** `logical`
+
+## 29. Diga si es verdadero o falso.
+
+1\. Todo entero se puede convertir en carácter.
+
+```{r}
+as.character(1:5)
+```
+
+**VERDADERO**\
+Cualquier entero puede convertirse a su representación en texto.
+
+2.  Todo carácter se puede convertir en numérico.
+
+```{r}
+as.numeric("123")
+
+as.numeric("abc")
+```
+
+**FALSO**\
+Caracteres que no representen números producen NA con advertencia. Solo caracteres que representen números pueden convertirse.
+
+3.  Un lógico se puede convertir en numérico.
+
+```{r}
+as.numeric(TRUE)
+
+as.numeric(FALSE)
+
+as.numeric(c(TRUE, FALSE, TRUE))
+```
+
+**VERDADERO**\
+Los lógicos se convierten a 1 (TRUE) y 0 (FALSE).
+
+4.  Un lógico se puede convertir en carácter.
+
+```{r}
+as.character(TRUE)
+as.character(FALSE)
+
+as.character(c(TRUE, FALSE))
+```
+
+**VERDADERO**\
+Los lógicos se convierten a sus representaciones textuales "TRUE" y "FALSE".
+
+30. Explique qué hace el siguiente código:
+
+x1 \<- 1:200
+
+```{r}
+x1 <- 1:200
+x1
+```
+
+x1\[!(x1%%2 == 0) & !(x1%%3 == 0) & !(x1%%7 ==0)\]
+
+```{r}
+x1[!(x1%%2 == 0) & !(x1%%3 == 0) & !(x1%%7 == 0)]
+```
+
+El código selecciona números del 1 al 200 que:
+
+-   NO son divisibles por 2 (no pares)
+
+-   Y NO son divisibles por 3
+
+-   Y NO son divisibles por 7
+
+Es decir, números que evitan esos tres divisores.
+
+## 31. A partir del siguiente código explique que hace la función duplicated sobre un vector y, además que hace la última línea del código.
+
+Se crea el vector
+
+```{r}
+zz <- c(9:12, 1:5, 3:7, 0:6)
+zz
+```
+
+**duplicated(zz)**
+
+```{r}
+duplicated(zz)
+```
+
+-   Devuelve un **vector lógico** de la misma longitud
+
+-   `FALSE` cuando el elemento aparece **por primera vez**
+
+-   `TRUE` cuando el elemento es una **repetición** (aparece nuevamente). Compara cada elemento con todos los anteriores
+
+    **zz\[!duplicated(zz)\]**
+
+```{r}
+zz[!duplicated(zz)]
+```
+
+-   !duplicated(zz) invierte el vector lógico (TRUE → FALSE, FALSE → TRUE)
+
+-   Selecciona solo elementos donde !duplicated() es TRUE
+
+-   Es decir, selecciona solo la primera ocurrencia de cada valor
+
+-   Elimina todos los duplicados
+
+## 32. Instale el paquete leaflet y corra el siguiente código:
+
+```{r}
+# 1. Instalar el paquete
+install.packages("leaflet")
+
+# 2. Cargar el paquete
+library(leaflet)
+
+# 3. Crear mapa interactivo
+m <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = -74.056159, lat = 4.656844, 
+             popup = "Universidad Santo Tomás")
+
+# 4. Mostrar el mapa
+m
+```
+
+-   `leaflet()`: Crea un objeto mapa vacío
+
+-   `%>%`: Operador pipe (encadena operaciones)
+
+-   `addTiles()`: Añade el mapa base (tiles) de OpenStreetMap
+
+-   `addMarkers()`: Añade un marcador en las coordenadas especificadas
+
+    -   `lng = -74.056159`: Longitud (Bogotá, Colombia)
+
+    -   `lat = 4.656844`: Latitud (Bogotá, Colombia)
+
+    -   `popup = "..."`: Texto que aparece al hacer clic
+
+**Resultado:** Un mapa interactivo mostrando la ubicación de la Universidad Santo Tomás en Bogotá.
+
+## 33. Ahora realice las siguientes actividades:
+
+1\. instale el paquete micEcon
+
+```{r}
+install.packages("micEcon")
+```
+
+2\. cargue el paquete micEcon
+
+```{r}
+library(micEcon)
+```
+
+3\. obtenga los conjuntos de datos que trae el paquete
+
+Muestra en la consola una tabla con todos los datasets disponibles en micEcon, incluyendo descripción y nombre de cada uno.
+
+```{r}
+data(package = "micEcon")
+```
+
+4\. solicite ayuda sobre el conjunto de datos Missong03E7.7
+
+**Abre la documentación del dataset:**
+
+-   Descripción del dataset
+
+-   Variables que contiene
+
+-   Fuente de datos
+
+-   Ejemplos de uso
+
+```{r}
+help(Missong03E7.7)
+# O equivalentemente:
+?Missong03E7.7
+```
+
+5\. obtenga todas las funciones del paquete micEcon
+
+Devuelve un vector con los nombres de todos los objetos (funciones, datasets) disponibles en micEcon
+
+```{r}
+ls("package:micEcon")
+```
+
+6\. desactive el paquete micEcon
+
+**Desactiva/descarga el paquete de la memoria**
+
+-   El paquete sigue instalado, solo deja de estar disponible
+
+-   Para volver a usarlo, ejecuta `library(micEcon)` nuevamente
+
+```{r}
+detach('package:micEcon')
+```
+
+7\. obtenga la lista de las viñetas del paquete knitr
+
+Muestra una tabla con todas las viñetas disponibles en el paquete knitr
+
+```{r}
+vignette(package = "knitr")
+```
+
+8\. abra la viñeta knitr-markdown
+
+-   Explica cómo usar knitr con Markdown
+
+-   Contiene ejemplos y mejores prácticas
+
+-   Es parte de la documentación oficial del paquete
+
+```{r}
+vignette("knitr-markdown", package = "knitr")
+```
+
+## 34.Cree las siguientes matrices en R
+
+1\) Matriz 2x2
+
+```{r}
+m1 <- matrix(c(1, sqrt(5), -2, 0), nrow = 2)
+m1
+```
+
+2\) Matriz 2x3
+
+```{r}
+m2 <- matrix(c(1,2,3,4,5,6), nrow = 3)
+m2
+```
+
+3\) Matriz 3x3
+
+```{r}
+m3 <- matrix(0, nrow = 3, ncol = 3)
+m3
+```
+
+4\) Matriz 3x3
+
+```{r}
+m4 <- diag(3)
+m4
+```
+
+## 35. Cree las siguientes matrices en R, con sus respectivos nombres.
+
+1\.
+
+```{r}
+m1 <- matrix(c(3, -8, 1,
+               -0.5, 1.27, 3,
+               0.8, 1.25, 2), nrow = 3)
+rownames(m1) <- c("R1", "R2", "R3")
+colnames(m1) <- c("C1", "C2", "C3")
+m1
+```
+
+2\.
+
+```{r}
+m2 <- matrix(c(4, -5,
+               -0.3, 2.7),
+             nrow = 2)
+rownames(m2) <- c("F1", "F2")
+colnames(m2) <- c("C1", "C2")
+m2
+```
+
+## 36. Dada una matriz 𝑋, explique que hacen las siguientes funciones de R:
+
+Dada una matriz x :
+
+```{r}
+X <- matrix(1:6, 2, 3)
+X
+```
+
+1\. length(X)
+
+Devuelve el número total de elementos (filas × columnas)
+
+```{r}
+length(X)
+```
+
+2\. dim(X)
+
+Devuelve las **dimensiones** (número de filas y columnas)
+
+```{r}
+dim(X)
+```
+
+3\. det(X)
+
+Calcula el determinante de una matriz cuadrada. Solo funciona con matrices cuadradas.
+
+```{r}
+X_cuadrada <- matrix(1:4, 2, 2)
+det(X_cuadrada)
+```
+
+4\. diag(X)
+
+Extrae la **diagonal principal** de la matriz (elementos donde fila = columna)
+
+```{r}
+diag(X_cuadrada)
+```
+
+5\. prod(X)
+
+Multiplica **todos los elementos**: 1 × 2 × 3 × 4 × 5 × 6 = 720
+
+```{r}
+prod(X)
+```
+
+6\. min(X)
+
+Encuentra el elemento menor de la matriz
+
+```{r}
+min(X)
+```
+
+7\. max(X)
+
+Encuentra el elemento mayor de la matriz
+
+```{r}
+max(X)
+```
+
+8\. mean(X)
+
+Calcula el promedio de todos los elementos
+
+```{r}
+mean(X)
+```
+
+9\. sd(X)
+
+Calcula la desviación estándar de todos los elementos
+
+```{r}
+sd(X)
+```
+
+10\. var(X)
+
+Calcula la varianza de todos los elementos (desviación estándar al cuadrado)
+
+```{r}
+var(X)
+```
+
+11\. t(X)
+
+Devuelve la transpuesta (intercambia filas por columnas)
+
+```{r}
+t(X)
+```
+
+12\. eigen(X\^{T}\*X)
+
+-   Calcula los eigenvalores (\$values) y eigenvectores (\$vectors)
+
+-   Útil en análisis multivariado, PCA, etc.
+
+-   %\*% es multiplicación matricial
+
+```{r}
+X_cuadrada <- matrix(1:4, 2, 2)
+eigen(t(X_cuadrada) %*% X_cuadrada)
+```
+
+## 37. Explique el siguiente código:
+
+```{r}
+m2 <- numeric(9)
+m2
+```
+
+is.vector(m2)
+
+Es un vector (no tiene dimensiones aún)
+
+```{r}
+is.vector(m2)
+```
+
+attributes(m2)
+
+Sin atributos especiales (un vector simple no tiene nombre de filas/columnas)
+
+```{r}
+attributes(m2)
+```
+
+dim(m2) \<- c(3,3) m2
+
+```{r}
+dim(m2) <- c(3, 3)
+m2
+```
+
+Asigna dimensiones 3×3 al vector y ahora se visualiza como matriz
+
+**attributes(m2)**
+
+```{r}
+attributes(m2)
+```
+
+Ahora tiene el atributo `dim` (dimensiones
+
+**m3 \<- matrix(0,4,4) m3**
+
+```{r}
+m3 <- matrix(0, 4, 4)
+m3
+```
+
+Crea directamente una matriz 4×4 de ceros
+
+## 38. En el siguiente código explique que hacen las funciones texttt{cbind()} y
+
+texttt{rbind()}
+
+```{r}
+A <- matrix(1:6, 3, 2)
+B <- matrix(2:7, 3, 2)
+A;B
+```
+
+cbind(A,B)
+
+-   Combina matrices lado a lado (junta columnas)
+
+-   Matriz resultante: 3 filas × 4 columnas
+
+-   Primero las 2 columnas de A, luego las 2 columnas de B
+
+```{r}
+cbind(A, B)
+```
+
+rbind(A,B)
+
+-   Combina matrices **una encima de la otra** (junta filas)
+
+-   Matriz resultante: 6 filas × 2 columnas
+
+-   Primero las 3 filas de A, luego las 3 filas de B
+
+```{r}
+rbind(A, B)
+```
+
+## 39. Dada la matriz:
+
+```{r}
+M <- matrix(1:16, 4, 4)
+M
+```
+
+Extraiga: 1. el elemento (2, 3).
+
+```{r}
+M[2, 3]
+```
+
+2\. los elementos 11 y 12.
+
+```{r}
+M[c(11, 12)]
+```
+
+3\. la segunda fila.
+
+```{r}
+M[2, ]
+```
+
+4\. la tercera columna.
+
+```{r}
+M[, 3]
+```
+
+5\. la primera y la cuarta columnas.
+
+```{r}
+M[, c(1, 4)]
+```
+
+6\. la segunda y tercera filas.
+
+```{r}
+M[c(2, 3), ]
+```
+
+7\. los elementos de la primera y segunda filas y de la tercera y cuarta columnas.
+
+```{r}
+M[c(1, 2), c(3, 4)]
+```
+
+## 40. Dada la matriz:
+
+```{r}
+A <- matrix(1:16, 4, 4)
+A
+```
+
+Escriba en palabras, qué extraen las siguientes expresiones:
+
+1\. 𝐴\[𝑐(13, 14)\]
+
+Extrae elementos en posiciones 13 y 14
+
+```{r}
+A[c(13, 14)]
+```
+
+2\. 𝐴\[4, \]
+
+Extrae la cuarta fila completa
+
+```{r}
+A[4, ]
+```
+
+3\. 𝐴\[, 2\]
+
+Extrae la segunda columna completa
+
+```{r}
+A[, 2]
+```
+
+4\. 𝐴\[𝑐(1, 2), 𝑐(3, 4)\]
+
+Extrae la submatriz con filas 1-2 y columnas 3-4
+
+```{r}
+A[c(1, 2), c(3, 4)]
+```
+
+## 41. Dadas las matrices:
+
+Se define las matrices
+
+```{r}
+A <- matrix(c(1, 2, -0.5, -3, 4, -1.5, 2, 0, -1, 3, -1.5, 2), nrow = 4, byrow = TRUE)
+B <- matrix(c(1, -1.5, 1.1, 1.6,0.2, 1.1, -1, 0.3, 4, -0.7, 1.1, -0.5), nrow = 3, byrow = TRUE)
+
+
+A;B
+```
+
+Obtenga:
+
+1\. 𝐴 ∗ 𝐵
+
+```{r}
+A %*% B
+```
+
+2.  𝐴𝑇
+
+```{r}
+t(A)
+```
+
+3.  𝐵𝑇 ∗ 𝐴𝑇
+
+```{r}
+t(B) %*% t(A)
+```
+
+4.  (𝐴𝑇 ∗ 𝐴)−1
+
+```{r}
+solve(t(A) %*% A)
+```
+
+5.  𝐵 ∗ 𝐵𝑇 + 𝐴𝑇 ∗ 𝐴
+
+```{r}
+B %*% t(B) + t(A) %*% A
+```
+
+## 42. Para resolver el sistema de ecuaciones:
+
+{3𝑥 + 𝑦 = 11
+𝑥 − 𝑦 = −1
+
+```{r}
+A <- matrix(c(3,1,1,-1), nrow = 2, byrow = TRUE)
+B <- matrix(c(11,-1), nrow = 2)
+
+solve(A, B)
+```
+
+x= 2.5
+
+y=3.5
+
+## 43. Dada la lista:
+
+```{r}
+lista1 <- list(persona = "Carlos", vector = c(pi, exp(1)),matriz = matrix(16:1, 4, 4),arreglo = array(24:1, c(2, 3, 4)))
+
+lista1
+```
+
+1\. extraiga el elemento (2, 2) de la matriz
+
+Es 11
+
+```{r}
+lista1[[3]][2, 2]
+```
+
+2\. extraiga el elemento (2, 2, 2) del arreglo
+
+Es 15
+
+```{r}
+lista1[[4]][2, 2, 2]
+```
+
+3\. ¿Qué extrae lista1\[\[1\]\]?
+Carlos
+
+```{r}
+lista1[[1]]
+```
+
+4\. ¿Qué extrae lista1\[\[3\]\]\[3,3\]?
+
+El 6
+
+```{r}
+lista1[[3]][3, 3]
+```
+
+5\. ¿Qué extrae lista1\\\$arreglo?
+
+Devuelve todo el arreglo
+
+```{r}
+lista1$arreglo
+```
+
+6\. ¿Qué extrae lista1\[\["matriz"\]\]?
+
+Devuelve la matriz completa
+
+```{r}
+lista1[["matriz"]]
+```
+
+## 44. ¿Qué estructura tienen los siguientes objetos?
+
+```{r}
+ip <- installed.packages()
+ip
+```
+
+ip es una matriz que contiene información de los paquetes instalados
+
+aip \<- attributes(ip)
+
+```{r}
+aip <- attributes(ip)
+aip
+```
+
+naip \<- aip\[\[2\]\]\[1\]
+
+Extraer nombre de atributo
+
+```{r}
+naip <- aip[[2]][1]
+naip
+```
+
+rnip \<- rownames(ip)
+
+Nombre de los paquetes instalados
+
+```{r}
+rnip <- rownames(ip)
+rnip
+```
+
+## ¿Cuántos paquetes tiene instalados?
+
+```{r}
+length(rownames(ip))
+```
+
+**El número será diferente según tu instalación de RStudio**. Típicamente entre 30-50 paquetes base + los que hayas instalado.
+
+## 45. ¿Qué son y qué contienen los siguientes objetos de R?
+
+```{r}
+month.abb
+```
+
+¿Qué es?
+
+-   Abreviaturas de meses en inglés
+
+-   Vector de caracteres con 12 elementos
+
+-   Pre-cargado en R (no necesita instalación)
+
+```{r}
+month.name
+```
+
+¿Qué es?
+
+-   Nombres completos de meses en inglés
+
+-   Vector de caracteres con 12 elementos
+
+-   Pre-cargado en R
+
+## Funcion ts()
+
+ts(rnorm(10), frequency = 4, start = c(2024, 2))
+
+```{r}
+ts(rnorm(10), frequency = 4, start = c(2024, 2))
+```
+
+st1 \<- ts(rnorm(38), start = c(2020, 3), frequency = 12)\
+st1
+
+```{r}
+st1 <- ts(rnorm(38), start = c(2020, 3), frequency = 12)
+st1
+```
+
+ts.plot(st1)
+
+Crea un gráfico de línea con la serie de tiempo
+
+```{r}
+ts.plot(st1)
+```
+
+window(st1, c(2020,8), c(2021,1))
+
+Extrae datos desde agosto 2020 hasta enero 2021
+
+```{r}
+window(st1, c(2020, 8), c(2021, 1))
+```
+
+## 46. Resuelva
+
+1\. Construya una serie de tiempo semestral con 20 datos que empiece en 2011.
+
+```{r}
+serie1 <- ts(rnorm(20), start = c(2011, 1), frequency = 2)
+serie1
+```
+
+2\. Cree una serie de tiempo con 15 datos bianuales, empezando en 2014.
+
+```{r}
+serie2 <- ts(rnorm(15), start = c(2014, 1), frequency = 0.5)
+serie2
+```
+
+3\. De una serie de tiempo mensual que empiece en enero de 2015 y termine
+en diciembre de 2018, extraiga una serie con los datos de 2017
+
+```{r}
+serie_completa <- ts(rnorm(48), start=c(2015, 1), end=c(2018, 12), frequency=12)
+
+# Extraer solo los datos de 2017
+serie_2017 <- window(serie_completa, start=c(2017, 1), end=c(2017, 12))
+
+# Ver el resultado
+serie_2017
+```
